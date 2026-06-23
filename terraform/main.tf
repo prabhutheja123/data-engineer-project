@@ -10,16 +10,22 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"
+  region = var.aws_region
+
+  default_tags {
+    tags = {
+      Project     = var.project
+      Environment = var.environment
+      ManagedBy   = "Terraform"
+    }
+  }
 }
 
 resource "aws_s3_bucket" "tfstate" {
   bucket = "cdc-etl-tfstate-008538886516"
 
   tags = {
-    Name        = "tfstate"
-    Environment = "dev"
-    Owner       = "Prabhu"
+    Name = "tfstate"
   }
 }
 
